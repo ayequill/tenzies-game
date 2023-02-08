@@ -1,7 +1,4 @@
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-}
+@import 'base';
+@import 'reset';
+@import 'variables';
+@import 'die';
