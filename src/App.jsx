@@ -1,18 +1,18 @@
 import "./styles/App.scss";
 import Die from "./components/Die";
 import React, { useState } from "react";
-import Confetti from 'react-confetti'
+import Confetti from "react-confetti";
 import { nanoid } from "nanoid";
 
 function App() {
   const [dieState, setDieState] = useState(generateNewRandomDice());
-  const [tenzies , setTenzies] = useState(false)
+  const [tenzies, setTenzies] = useState(false);
 
-  React.useEffect(()=>{
-    const firstVal = dieState[0].value
-    setTenzies(dieState.every((die) => die.isHeld && die.value === firstVal))
-  }, [dieState])
-  
+  React.useEffect(() => {
+    const firstVal = dieState[0].value;
+    setTenzies(dieState.every((die) => die.isHeld && die.value === firstVal));
+  }, [dieState]);
+
   /* function to generate 6 random numbers. used '~~'
   which is a short form Math.floor */
   // function generateNewRandomDice(length) {
@@ -47,9 +47,11 @@ function App() {
     // setDieState(state => {
     //   return
     // })
-
-    setDieState((state) => state.map((die) => (die.isHeld ? die : newDie())));
-
+    if (tenzies) {
+      setDieState(generateNewRandomDice());
+    } else {
+      setDieState((state) => state.map((die) => (die.isHeld ? die : newDie())));
+    }
     // setDieState(
     //   prev => prev.map((die) => {
     //     return {...die,
@@ -69,9 +71,12 @@ function App() {
   return (
     <div className="App">
       <main className="main">
-        {tenzies && <Confetti  />}
-      <h1 className="title">Tenzies</h1>
-            <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
+        {tenzies && <Confetti />}
+        <h1 className="title">Tenzies</h1>
+        <p className="instructions">
+          Roll until all dice are the same. Click each die to freeze it at its
+          current value between rolls.
+        </p>
         <div className="die__elements">
           {dieState.map((num) => (
             <Die
@@ -83,7 +88,7 @@ function App() {
           ))}
         </div>
         <button onClick={rollDice} className="roll__btn">
-          {tenzies ? 'New Game' : 'Roll'}
+          {tenzies ? "New Game" : "Roll"}
         </button>
       </main>
     </div>
